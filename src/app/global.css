@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light mode defaults — overridden at runtime by ThemeProvider via vars() */
+    --bg:             255 255 255; /* white        */
+    --surface:        250 250 250; /* black-5      */
+    --fg:             15 23 42;    /* dark #0F172A */
+    --fg-2:           97 97 97;    /* black-70     */
+    --fg-muted:       189 189 189; /* black-40     */
+    --ui-border:      238 238 238; /* black-20     */
+    --input-bg:       255 255 255; /* white        */
+    --input-border:   224 224 224; /* black-30     */
+  }
+}
