@@ -1,10 +1,5 @@
-import React, { useEffect } from "react";
-import { Pressable } from "react-native";
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withSpring,
-} from "react-native-reanimated";
+import React, { useEffect, useRef } from "react";
+import { Animated, Pressable } from "react-native";
 
 export type ToggleSize = "sm" | "md";
 
@@ -31,21 +26,19 @@ export function Toggle({
   const offX = pad;
   const onX = trackW - thumbD - pad;
 
-  const tx = useSharedValue(value ? onX : offX);
+  const tx = useRef(new Animated.Value(value ? onX : offX)).current;
 
   useEffect(() => {
-    tx.value = withSpring(value ? onX : offX, { damping: 18, stiffness: 220 });
-  }, [value, onX, offX]);
+    Animated.spring(tx, {
+      toValue: value ? onX : offX,
+      stiffness: 220,
+      damping: 18,
+      mass: 1,
+      useNativeDriver: true,
+    }).start();
+  }, [value]);
 
-  const thumbStyle = useAnimatedStyle(() => ({
-    transform: [{ translateX: tx.value }],
-  }));
-
-  const trackColor = disabled
-    ? "#BDBDBD"
-    : value
-    ? "#2667FF"
-    : "#BDBDBD";
+  const trackColor = disabled ? "#BDBDBD" : value ? "#2667FF" : "#BDBDBD";
 
   return (
     <Pressable
@@ -62,20 +55,18 @@ export function Toggle({
       accessibilityState={{ checked: value, disabled }}
     >
       <Animated.View
-        style={[
-          thumbStyle,
-          {
-            width: thumbD,
-            height: thumbD,
-            borderRadius: thumbD / 2,
-            backgroundColor: "#FFFFFF",
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 1 },
-            shadowOpacity: 0.18,
-            shadowRadius: 2,
-            elevation: 2,
-          },
-        ]}
+        style={{
+          transform: [{ translateX: tx }],
+          width: thumbD,
+          height: thumbD,
+          borderRadius: thumbD / 2,
+          backgroundColor: "#FFFFFF",
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: 0.18,
+          shadowRadius: 2,
+          elevation: 2,
+        }}
       />
     </Pressable>
   );

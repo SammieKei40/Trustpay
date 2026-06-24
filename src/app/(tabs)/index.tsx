@@ -1,4 +1,4 @@
-import "./global.css";
+import "../global.css";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import {
@@ -10,14 +10,14 @@ import {
   Wallet,
   Logout,
 } from "react-native-iconly";
-import { useTheme } from "../context/ThemeContext";
-import { Screen } from "../components/ui/Screen";
-import { Toggle } from "../components/ui/Toggle";
-import { Checkbox, CheckboxGroup } from "../components/ui/Checkbox";
-import { Radio, RadioGroup } from "../components/ui/Radio";
-import { Alert, AlertStack } from "../components/ui/Alert";
-import { Tabs } from "../components/ui/Tabs";
-import { MenuBar, BottomMenuBar } from "../components/ui/MenuBar";
+import { useTheme } from "../../context/ThemeContext";
+import { Screen } from "../../components/ui/Screen";
+import { Toggle } from "../../components/ui/Toggle";
+import { Checkbox, CheckboxGroup } from "../../components/ui/Checkbox";
+import { Radio, RadioGroup } from "../../components/ui/Radio";
+import { Alert, AlertStack } from "../../components/ui/Alert";
+import { Tabs } from "../../components/ui/Tabs";
+import { MenuBar, BottomMenuBar } from "../../components/ui/MenuBar";
 
 // ─── Section header ───────────────────────────────────────────────────────────
 

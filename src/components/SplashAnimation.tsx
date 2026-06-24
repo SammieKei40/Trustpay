@@ -17,9 +17,11 @@ const ARROW_OFFSET = 18;
 
 interface Props {
   onFinish: () => void;
+  // Called while the watercolor is still fully covering the screen — safe to navigate here
+  onBeforeFade?: () => void;
 }
 
-export function SplashAnimation({ onFinish }: Props) {
+export function SplashAnimation({ onFinish, onBeforeFade }: Props) {
   const pillHeight = useRef(new Animated.Value(180)).current;
   const pillWidth = useRef(new Animated.Value(PILL_W)).current;
   const pillRadius = useRef(new Animated.Value(PILL_W / 2)).current;
@@ -85,15 +87,18 @@ export function SplashAnimation({ onFinish }: Props) {
 
       // Hold on watercolor
       Animated.delay(700),
-
-      // Fade to app
+    ]).start(({ finished }) => {
+      if (!finished) return;
+      // Navigate while the watercolor still covers the screen — no flash
+      onBeforeFade?.();
+      // Now fade out to reveal the destination screen
       Animated.timing(rootOpacity, {
         toValue: 0,
         duration: 500,
         useNativeDriver: false,
-      }),
-    ]).start(({ finished }) => {
-      if (finished) onFinish();
+      }).start(({ finished: fadeDone }) => {
+        if (fadeDone) onFinish();
+      });
     });
   }, []);
 
