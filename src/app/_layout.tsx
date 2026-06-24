@@ -7,8 +7,9 @@ import {
 } from "@expo-google-fonts/inter";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ThemeProvider } from "../context/ThemeContext";
+import { SplashAnimation } from "../components/SplashAnimation";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -20,9 +21,13 @@ export default function RootLayout() {
     Inter_700Bold,
   });
 
+  const [showSplash, setShowSplash] = useState(false);
+
   useEffect(() => {
     if (fontsLoaded || fontError) {
+      // Hide native splash — custom animation takes over seamlessly (same blue bg)
       SplashScreen.hideAsync();
+      setShowSplash(true);
     }
   }, [fontsLoaded, fontError]);
 
@@ -33,6 +38,9 @@ export default function RootLayout() {
   return (
     <ThemeProvider>
       <Stack screenOptions={{ headerShown: false }} />
+      {showSplash && (
+        <SplashAnimation onFinish={() => setShowSplash(false)} />
+      )}
     </ThemeProvider>
   );
 }
