@@ -36,6 +36,7 @@ const themeVars = {
     "--ui-border":    "238 238 238", // black-20
     "--input-bg":     "255 255 255", // white
     "--input-border": "224 224 224", // black-30
+    "--primary":      "38 103 255",  // #2667FF
   }),
   dark: vars({
     "--bg":           "15 23 42",    // dark
@@ -46,6 +47,7 @@ const themeVars = {
     "--ui-border":    "66 66 66",    // black-80
     "--input-bg":     "30 41 59",    // dark-card
     "--input-border": "97 97 97",    // black-70
+    "--primary":      "38 103 255",  // #2667FF
   }),
 };
 

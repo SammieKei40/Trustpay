@@ -12,7 +12,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/Trustpay.png",
+        "foregroundImage": "./assets/Trustpay.png"
       },
       "predictiveBackGestureEnabled": false
     },
@@ -27,6 +27,14 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#3B6EFF"
+        }
+      ],
+      "@react-native-community/datetimepicker",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Allow TrustPay to access your photos to upload ID documents.",
+          "cameraPermission": "Allow TrustPay to access your camera to take photos of your ID."
         }
       ]
     ],

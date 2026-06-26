@@ -13,5 +13,6 @@
     --ui-border:      238 238 238; /* black-20     */
     --input-bg:       255 255 255; /* white        */
     --input-border:   224 224 224; /* black-30     */
+    --primary:        38 103 255;  /* #2667FF      */
   }
 }

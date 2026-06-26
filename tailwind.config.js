@@ -41,7 +41,7 @@ module.exports = {
         // ────────────────────────────────────────────────────────────────────
 
         primary: {
-          DEFAULT: "#2667FF",
+          DEFAULT: "rgb(var(--primary) / <alpha-value>)",
         },
         secondary: {
           DEFAULT: "#00C389",
