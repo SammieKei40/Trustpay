@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { Appearance, View } from "react-native";
+import { useColorScheme, View } from "react-native";
 
 type ThemeMode = "light" | "dark";
 
@@ -50,9 +50,16 @@ const themeVars = {
 };
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const system = Appearance.getColorScheme() ?? "light";
-  const [theme, setThemeState] = useState<ThemeMode>(system);
+  const raw = useColorScheme();
+  const systemScheme: ThemeMode = raw === "dark" ? "dark" : "light";
+  const [theme, setThemeState] = useState<ThemeMode>(systemScheme);
 
+  // Re-sync whenever the OS appearance changes
+  useEffect(() => {
+    setThemeState(systemScheme);
+  }, [systemScheme]);
+
+  // Keep NativeWind's colorScheme in sync whenever theme changes
   useEffect(() => {
     colorScheme.set(theme);
   }, [theme]);

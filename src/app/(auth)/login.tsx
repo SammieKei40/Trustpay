@@ -2,15 +2,14 @@ import "../global.css";
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, Text, View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
 import { Button } from '../../components/ui/Button';
+
+import { ChevronLeft } from '../../components/ui/ChevronLeft';
 import { PasswordInput, PhoneInput } from '../../components/ui/Input';
 import { Screen } from '../../components/ui/Screen';
-import { useTheme } from '../../context/ThemeContext';
 import { validatePassword, validatePhone } from '../../utils/validation';
 
 export default function LoginScreen() {
-  const { isDark } = useTheme();
   const router = useRouter();
 
   const [phone, setPhone] = useState('');
@@ -55,7 +54,7 @@ export default function LoginScreen() {
             variant="ghost"
             color="dark"
             size="sm"
-            icon={<ChevronLeft isDark={isDark} />}
+            icon={<ChevronLeft />}
             onPress={() => router.back()}
           />
         </View>
@@ -108,7 +107,7 @@ export default function LoginScreen() {
             />
             <Pressable
               style={{ alignSelf: 'flex-end' }}
-              onPress={() => {/* TODO: forgot password flow */}}
+              onPress={() => router.push('/(auth)/forgot-password')}
             >
               <Text
                 className="font-inter-medium text-primary"
@@ -139,21 +138,5 @@ export default function LoginScreen() {
 
       </View>
     </Screen>
-  );
-}
-
-// ─── Back chevron ─────────────────────────────────────────────────────────────
-
-function ChevronLeft({ isDark }: { isDark: boolean }) {
-  return (
-    <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
-      <Path
-        d="M15 19l-7-7 7-7"
-        stroke={isDark ? '#FFFFFF' : '#0F172A'}
-        strokeWidth={2.2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </Svg>
   );
 }
