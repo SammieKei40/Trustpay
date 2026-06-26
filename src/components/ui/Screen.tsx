@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View } from "react-native";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface ScreenProps {
@@ -11,7 +11,7 @@ interface ScreenProps {
 export function Screen({ children, scroll = false, className = "" }: ScreenProps) {
   const insets = useSafeAreaInsets();
 
-  const style = {
+  const safeStyle = {
     paddingTop: insets.top,
     paddingBottom: insets.bottom,
     paddingLeft: insets.left,
@@ -22,21 +22,27 @@ export function Screen({ children, scroll = false, className = "" }: ScreenProps
 
   if (scroll) {
     return (
-      <View className={base} style={style}>
-        <ScrollView
-          className="flex-1"
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}
+      <View className={base} style={safeStyle}>
+        <KeyboardAvoidingView
+          style={{ flex: 1 }}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={0}
         >
-          {children}
-        </ScrollView>
+          <ScrollView
+            className="flex-1"
+            contentContainerStyle={{ flexGrow: 1 }}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+          >
+            {children}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }
 
   return (
-    <View className={base} style={style}>
+    <View className={base} style={safeStyle}>
       {children}
     </View>
   );

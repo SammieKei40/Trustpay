@@ -20,6 +20,7 @@ export default function WelcomeScreen() {
         {/* ── Back button ────────────────────────────────────────────────── */}
         <View className="px-4 pt-1 pb-1" style={{ alignItems: 'flex-start' }}>
           <Button
+            variant="ghost"
             color="dark"
             size="sm"
             icon={<ChevronLeft isDark={isDark} />}

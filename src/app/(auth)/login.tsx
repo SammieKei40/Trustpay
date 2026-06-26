@@ -7,6 +7,7 @@ import { Button } from '../../components/ui/Button';
 import { PasswordInput, PhoneInput } from '../../components/ui/Input';
 import { Screen } from '../../components/ui/Screen';
 import { useTheme } from '../../context/ThemeContext';
+import { validatePassword, validatePhone } from '../../utils/validation';
 
 export default function LoginScreen() {
   const { isDark } = useTheme();
@@ -14,11 +15,32 @@ export default function LoginScreen() {
 
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+  const [phoneError, setPhoneError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
 
   const canSubmit = phone.trim().length > 0 && password.length > 0;
 
+  const handlePhoneBlur = () => {
+    if (!phone) return;
+    const result = validatePhone(phone);
+    setPhoneError(result.isValid ? '' : result.message);
+  };
+
+  const handlePasswordBlur = () => {
+    if (!password) return;
+    const result = validatePassword(password);
+    setPasswordError(result.isValid ? '' : result.message);
+  };
+
   const handleLogin = () => {
-    if (!canSubmit) return;
+    const phoneResult = validatePhone(phone);
+    const passResult = validatePassword(password);
+
+    setPhoneError(phoneResult.isValid ? '' : phoneResult.message);
+    setPasswordError(passResult.isValid ? '' : passResult.message);
+
+    if (!phoneResult.isValid || !passResult.isValid) return;
+
     // TODO: authenticate — on success navigate to main app
     router.replace('/(tabs)');
   };
@@ -30,6 +52,7 @@ export default function LoginScreen() {
         {/* ── Back button ────────────────────────────────────────────────── */}
         <View className="px-4 pt-1 pb-1" style={{ alignItems: 'flex-start' }}>
           <Button
+            variant="ghost"
             color="dark"
             size="sm"
             icon={<ChevronLeft isDark={isDark} />}
@@ -60,9 +83,14 @@ export default function LoginScreen() {
             label="Phone Number"
             placeholder="Enter mobile number"
             value={phone}
-            onChangeText={setPhone}
-            flag="🇧🇩"
-            countryCode="+880"
+            onChangeText={(text) => {
+              setPhone(text);
+              if (phoneError) setPhoneError('');
+            }}
+            defaultDialCode="+880"
+            state={phoneError ? 'error' : 'default'}
+            alertMessage={phoneError}
+            onBlur={handlePhoneBlur}
           />
 
           <View style={{ gap: 8 }}>
@@ -70,7 +98,13 @@ export default function LoginScreen() {
               label="Password"
               placeholder="Password"
               value={password}
-              onChangeText={setPassword}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (passwordError) setPasswordError('');
+              }}
+              state={passwordError ? 'error' : 'default'}
+              alertMessage={passwordError}
+              onBlur={handlePasswordBlur}
             />
             <Pressable
               style={{ alignSelf: 'flex-end' }}
