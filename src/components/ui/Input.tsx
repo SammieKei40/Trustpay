@@ -362,7 +362,7 @@ export function PhoneInput({
 
         {/* Phone number field */}
         <RNTextInput
-          className={`flex-1 text-t-14 font-inter-regular ${isDisabled ? "text-fg-muted" : "text-fg"}`}
+          className={`flex-1 font-inter-regular ${isDisabled ? "text-fg-muted" : "text-fg"}`}
           placeholder={placeholder}
           placeholderTextColor={placeholderColor(state, isDark)}
           value={value}

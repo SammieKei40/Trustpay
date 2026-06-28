@@ -30,14 +30,16 @@ module.exports = {
       colors: {
         // ── Semantic tokens — auto-switch light↔dark via CSS variables ──────
         // Use these instead of dark: prefixes. Values are injected by ThemeProvider.
-        bg:           "rgb(var(--bg) / <alpha-value>)",
-        surface:      "rgb(var(--surface) / <alpha-value>)",
-        fg:           "rgb(var(--fg) / <alpha-value>)",
-        "fg-2":       "rgb(var(--fg-2) / <alpha-value>)",
-        "fg-muted":   "rgb(var(--fg-muted) / <alpha-value>)",
-        "ui-border":  "rgb(var(--ui-border) / <alpha-value>)",
-        "input-bg":   "rgb(var(--input-bg) / <alpha-value>)",
+        bg:             "rgb(var(--bg) / <alpha-value>)",
+        surface:        "rgb(var(--surface) / <alpha-value>)",
+        fg:             "rgb(var(--fg) / <alpha-value>)",
+        "fg-2":         "rgb(var(--fg-2) / <alpha-value>)",
+        "fg-muted":     "rgb(var(--fg-muted) / <alpha-value>)",
+        "ui-border":    "rgb(var(--ui-border) / <alpha-value>)",
+        "input-bg":     "rgb(var(--input-bg) / <alpha-value>)",
         "input-border": "rgb(var(--input-border) / <alpha-value>)",
+        header:         "rgb(var(--header) / <alpha-value>)",
+        "header-card":  "rgb(var(--header-card) / <alpha-value>)",
         // ────────────────────────────────────────────────────────────────────
 
         primary: {

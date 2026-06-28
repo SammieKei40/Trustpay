@@ -29,25 +29,29 @@ const ThemeContext = createContext<ThemeContextValue>({
 const themeVars = {
   light: vars({
     "--bg":           "255 255 255", // white
-    "--surface":      "250 250 250", // black-5
-    "--fg":           "15 23 42",    // dark
-    "--fg-2":         "97 97 97",    // black-70
-    "--fg-muted":     "189 189 189", // black-40
-    "--ui-border":    "238 238 238", // black-20
+    "--surface":      "245 245 245", // #F5F5F5 — light card bg, distinct from white
+    "--fg":           "15 23 42",    // #0F172A — near-black primary text
+    "--fg-2":         "97 97 97",    // #616161 — secondary labels (form labels etc.)
+    "--fg-muted":     "117 117 117", // #757575 — muted text (subtitles, captions)
+    "--ui-border":    "238 238 238", // #EEEEEE
     "--input-bg":     "255 255 255", // white
-    "--input-border": "224 224 224", // black-30
+    "--input-border": "224 224 224", // #E0E0E0
     "--primary":      "38 103 255",  // #2667FF
+    "--header":       "38 103 255",  // #2667FF — brand blue header
+    "--header-card":  "21 53 184",   // #1535B8 — deeper blue balance card
   }),
   dark: vars({
-    "--bg":           "15 23 42",    // dark
-    "--surface":      "30 41 59",    // dark-card
-    "--fg":           "255 255 255", // white
-    "--fg-2":         "224 224 224", // black-30
-    "--fg-muted":     "117 117 117", // black-60
-    "--ui-border":    "66 66 66",    // black-80
-    "--input-bg":     "30 41 59",    // dark-card
-    "--input-border": "97 97 97",    // black-70
+    "--bg":           "15 23 42",    // #0F172A — dark page bg
+    "--surface":      "30 41 59",    // #1E293B — dark card bg
+    "--fg":           "255 255 255", // white — primary text
+    "--fg-2":         "189 189 189", // #BDBDBD — secondary labels on dark
+    "--fg-muted":     "158 158 158", // #9E9E9E — muted captions on dark cards
+    "--ui-border":    "66 66 66",    // #424242
+    "--input-bg":     "30 41 59",    // #1E293B
+    "--input-border": "97 97 97",    // #616161
     "--primary":      "38 103 255",  // #2667FF
+    "--header":       "13 27 62",    // #0D1B3E — dark navy header
+    "--header-card":  "26 42 82",    // #1A2A52 — dark steel balance card
   }),
 };
 
