@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   FlatList,
   Modal,
@@ -295,6 +295,9 @@ export function PhoneInput({
     () => findCountryByDialCode(defaultDialCode) ?? DEFAULT_COUNTRY
   );
 
+  // Prevents cascading re-detection after a dial code has been stripped once
+  const dialCodeStripped = useRef(false);
+
   // Detect country from a numeric/dial-code query
   const isNumericQuery = search.trim().length > 0 && /^\+?\d+$/.test(search.trim());
   const dialCodeQuery = search.trim().startsWith('+')
@@ -330,6 +333,7 @@ export function PhoneInput({
     setModalVisible(false);
     setSearch('');
     onCountryChange?.(country);
+    dialCodeStripped.current = false;
   };
 
   const handleClose = () => {
@@ -366,7 +370,50 @@ export function PhoneInput({
           placeholder={placeholder}
           placeholderTextColor={placeholderColor(state, isDark)}
           value={value}
-          onChangeText={(text) => onChangeText?.(text.replace(/\D/g, ''))}
+          onChangeText={(text) => {
+            const digits = text.replace(/\D/g, '');
+
+            // When the field is cleared, allow detection to run again next time
+            if (digits.length === 0) {
+              dialCodeStripped.current = false;
+              onChangeText?.('');
+              return;
+            }
+
+            // Only attempt detection once per entry session to prevent
+            // cascading switches (e.g. stripping "+234" leaves "7..." which
+            // would immediately match Russia "+7")
+            if (!dialCodeStripped.current) {
+              let bestMatch: Country | null = null;
+              let bestMatchLength = 0;
+              for (const country of COUNTRIES) {
+                const dialDigits = country.dialCode.replace('+', '');
+                if (
+                  digits.startsWith(dialDigits) &&
+                  dialDigits.length > bestMatchLength
+                ) {
+                  bestMatchLength = dialDigits.length;
+                  bestMatch = country;
+                }
+              }
+
+              // Switch only when a different country is matched and the user
+              // has typed at least one local digit past the dial code
+              if (
+                bestMatch &&
+                bestMatch.iso2 !== selectedCountry.iso2 &&
+                digits.length > bestMatchLength
+              ) {
+                dialCodeStripped.current = true;
+                setSelectedCountry(bestMatch);
+                onCountryChange?.(bestMatch);
+                onChangeText?.(digits.slice(bestMatchLength));
+                return;
+              }
+            }
+
+            onChangeText?.(digits);
+          }}
           editable={!isDisabled}
           keyboardType="phone-pad"
           onFocus={() => setFocused(true)}

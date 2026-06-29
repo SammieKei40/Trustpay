@@ -239,7 +239,10 @@ export default function SettingsScreen() {
             {/* Buttons */}
             <View className="px-5 pt-5 pb-8 gap-3">
               <Pressable
-                onPress={() => setLogoutVisible(false)}
+                onPress={() => {
+                  setLogoutVisible(false);
+                  router.replace("/(auth)/login");
+                }}
                 className="bg-error rounded-2xl items-center active:opacity-80"
                 style={{ paddingVertical: 16 }}
               >
